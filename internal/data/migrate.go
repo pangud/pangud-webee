@@ -2,7 +2,8 @@ package data
 
 import (
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/sys/user"
+
+	"pangud.io/pangud/internal/biz/user"
 )
 
 func (d *Data) Migrate() {

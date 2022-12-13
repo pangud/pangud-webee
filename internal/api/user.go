@@ -3,7 +3,8 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/sys/user"
+
+	"pangud.io/pangud/internal/biz/user"
 )
 
 type UserResource struct {

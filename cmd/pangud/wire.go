@@ -8,9 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/api"
-	"pangud.io/pangud/internal/sys"
 
+	"pangud.io/pangud/internal/api"
+	"pangud.io/pangud/internal/biz"
 	"pangud.io/pangud/internal/conf"
 	"pangud.io/pangud/internal/data"
 	"pangud.io/pangud/internal/server"
@@ -30,5 +30,5 @@ func (a *App) Run() {
 	a.server.Run()
 }
 func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App, func(), error) {
-	panic(wire.Build(data.ProviderSet, api.ProviderSet, server.ProviderSet, sys.ProviderSet, newApp))
+	panic(wire.Build(data.ProviderSet, api.ProviderSet, server.ProviderSet, biz.ProviderSet, newApp))
 }

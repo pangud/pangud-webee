@@ -10,10 +10,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 	"pangud.io/pangud/internal/api"
+	"pangud.io/pangud/internal/biz/user"
 	"pangud.io/pangud/internal/conf"
 	"pangud.io/pangud/internal/data"
 	"pangud.io/pangud/internal/server"
-	"pangud.io/pangud/internal/sys/user"
 )
 
 // Injectors from wire.go:
