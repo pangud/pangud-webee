@@ -2,25 +2,27 @@ package data
 
 import (
 	"context"
-	"path/filepath"
-	"time"
 
 	"github.com/go-redis/redis/v8"
-	bolt "go.etcd.io/bbolt"
+	"github.com/google/wire"
+	"go.etcd.io/bbolt"
 	"go.uber.org/zap"
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"path/filepath"
 
 	"pangud.io/pangud/internal/conf"
 	"pangud.io/pangud/internal/log"
 	"pangud.io/pangud/internal/tx"
 )
 
+var ProviderSet = wire.NewSet(NewData, NewTransaction, NewUserRepository)
+
 type Data struct {
 	// 通过DB(ctx)获取 以支持事务
 	db     *gorm.DB
 	rdb    *redis.Client
-	boltDB *bolt.DB
+	boltDB *bbolt.DB
 	log    *zap.Logger
 }
 
@@ -56,28 +58,17 @@ func (d *Data) Rdb() *redis.Client {
 // NewData new a data and return.
 func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 
-	dsn := cfg.Data.Database.DSN
+	dsn := filepath.Join(cfg.Workdir, "data/.pangud.sdb")
 
-	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{
+	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
 		Logger: log.NewGormLogger(cfg.Logger)})
 
 	if err != nil {
 		logger.Sugar().Fatalf("db connect error: %s", err)
 	}
 
-	rdbCfg := cfg.Data.Redis
-	rdb := redis.NewClient(&redis.Options{
-		Addr:         rdbCfg.Addr,
-		Password:     rdbCfg.Password,      // no password set
-		DB:           int(rdbCfg.Database), // use default DB
-		IdleTimeout:  time.Duration(rdbCfg.IdleTimeout) * time.Second,
-		ReadTimeout:  rdbCfg.ReadTimeout,
-		WriteTimeout: rdbCfg.WriteTimeout,
-		MinIdleConns: int(rdbCfg.MaxIdle),
-	})
-
-	dbpath := filepath.Join(cfg.Workdir, "pangud.db")
-	bdb, err := bolt.Open(dbpath, 0666, nil)
+	dbpath := filepath.Join(cfg.Workdir, "data/.pangud.bdb")
+	bdb, err := bbolt.Open(dbpath, 0666, nil)
 	if err != nil {
 		logger.Sugar().Fatalf("db connect error: %s", err)
 		//return err
@@ -88,9 +79,8 @@ func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 		if conn, err := db.DB(); err == nil {
 			conn.Close()
 		}
-		rdb.Close()
 		bdb.Close()
 	}
 
-	return &Data{db: db, rdb: rdb, boltDB: bdb, log: logger}, cleanup, nil
+	return &Data{db: db, boltDB: bdb, log: logger}, cleanup, nil
 }

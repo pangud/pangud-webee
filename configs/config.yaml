@@ -1,0 +1,20 @@
+server:
+  addr: 0.0.0.0:2345
+workdir: ./test
+logger:
+  file:
+    path: ./logs
+    name: server.log
+    level: info
+    max_size: 100
+    max_age: 30
+    max_backups: 3
+  console:
+    level: debug
+    format: text
+    color: true
+  gorm:
+    level: info
+    slow_threshold: 200ms
+    caller: true
+    ignore_record_not_found_error: false

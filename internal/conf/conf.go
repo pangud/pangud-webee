@@ -1,8 +1,12 @@
 package conf
 
 import (
+	"bytes"
 	"fmt"
+	"os"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 // Bootstrap is the bootstrap config
@@ -25,7 +29,7 @@ type Data struct {
 
 // Database is the database config
 type Database struct {
-	DSN string `json:"dsn";yaml:"dsn"`
+	DSN string `yaml:"dsn"`
 }
 
 type Redis struct {
@@ -92,5 +96,23 @@ func (g *GormLogger) UnmarshalYAML(unmarshal func(interface{}) error) error {
 	g.IgnoreRecordNotFoundError = tmp.IgnoreRecordNotFoundError
 	g.Caller = tmp.Caller
 	g.SlowThreshold = t
+	return nil
+}
+
+func Load(file string, obj interface{}) error {
+
+	content, err := os.ReadFile(file)
+	if err != nil {
+		return err
+	}
+
+	viper.SetConfigType("yaml")
+
+	viper.ReadConfig(bytes.NewBuffer(content))
+
+	//var bootstrap Bootstrap
+	if err = viper.Unmarshal(obj); err != nil {
+		return err
+	}
 	return nil
 }
