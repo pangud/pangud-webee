@@ -4,12 +4,12 @@ import (
 	"context"
 	"time"
 )
-
+// Model 所有模型应实现的接口
 type Model interface {
 	// TableName returns the table name of the model
 	TableName() string
 }
-
+// TimeModel is the base model for all models with time fields.
 type TimeModel struct {
 	CreateTime time.Time `gorm:"column:create_time;autoCreateTime"`
 	UpdateTime time.Time `gorm:"column:update_time;autoUpdateTime"`
