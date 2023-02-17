@@ -3,15 +3,15 @@ package log
 import (
 	"io"
 	"os"
+	"path/filepath"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
 	glogger "gorm.io/gorm/logger"
 
-	"pangud.io/pangud/internal/conf"
+	"pangud.io/pangud/pkg/conf"
 	"pangud.io/pangud/third_party/zapgorm2"
-	"path/filepath"
 )
 
 type WriteSyncer struct {
