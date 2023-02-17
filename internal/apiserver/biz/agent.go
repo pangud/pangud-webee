@@ -14,6 +14,7 @@ const (
 	AgentTypeUnknown AgentType = iota
 	AgentTypeServer
 	AgentTypeEdge
+	AgentTypeKube
 )
 
 type Agent struct {
@@ -26,7 +27,7 @@ type Agent struct {
 }
 
 func (a *Agent) TableName() string {
-	return "m_agents"
+	return "m_endpoints"
 }
 
 // AgentReadRepository agent读存储库
