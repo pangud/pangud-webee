@@ -14,7 +14,7 @@ import (
 	"pangud.io/pangud/pkg/tx"
 )
 
-var ProviderSet = wire.NewSet(NewData, NewTransaction, NewUserRepository)
+var ProviderSet = wire.NewSet(NewData, NewTransaction)
 
 type Data struct {
 	// 通过DB(ctx)获取 以支持事务
@@ -47,16 +47,10 @@ func (d *Data) DB(ctx context.Context) *gorm.DB {
 	return d.db
 }
 
-//func (d *Data) Rdb() *redis.Client {
-//	return d.rdb
-//}
-
 // NewData new a data and return.
 func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 
-	dsn := filepath.Join(cfg.Workdir, "data/.pangud.sdb")
-
-	//use mysql
+	dsn := filepath.Join(cfg.Workdir, "data/.agent.sdb")
 
 	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
 		Logger: log.NewGormLogger(cfg.Logger)})
@@ -64,13 +58,6 @@ func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 	if err != nil {
 		logger.Sugar().Fatalf("db connect error: %s", err)
 	}
-
-	//dbpath := filepath.Join(cfg.Workdir, "data/.pangud.bdb")
-	//bdb, err := bbolt.Open(dbpath, 0666, nil)
-	//if err != nil {
-	//	logger.Sugar().Fatalf("db connect error: %s", err)
-	//	//return err
-	//}
 
 	cleanup := func() {
 		logger.Sugar().Info("closing the data resources")
