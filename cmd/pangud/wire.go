@@ -9,11 +9,11 @@ import (
 	"github.com/google/wire"
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/api"
-	"pangud.io/pangud/internal/biz"
-	"pangud.io/pangud/internal/conf"
-	"pangud.io/pangud/internal/data"
-	"pangud.io/pangud/internal/server"
+	"pangud.io/pangud/internal/apiserver/biz"
+	"pangud.io/pangud/internal/apiserver/data"
+	"pangud.io/pangud/internal/apiserver/resource"
+	"pangud.io/pangud/internal/apiserver/server"
+	"pangud.io/pangud/pkg/conf"
 )
 
 // App is the main application
@@ -30,5 +30,5 @@ func (a *App) Run() {
 	a.server.Run()
 }
 func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App, func(), error) {
-	panic(wire.Build(data.ProviderSet, api.ProviderSet, server.ProviderSet, biz.ProviderSet, newApp))
+	panic(wire.Build(data.ProviderSet, resource.ProviderSet, server.ProviderSet, biz.ProviderSet, newApp))
 }

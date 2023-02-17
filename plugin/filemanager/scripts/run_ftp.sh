@@ -1,0 +1,1 @@
+ docker run -it --rm --name ftp -v $PWD/data:/data -v $PWD/conf:/etc/proftpd -p 2211:21 -p 48000-48050:48000-48050 feikuio/proftpd:1.3.7-a

@@ -2,21 +2,20 @@ package main
 
 import (
 	"fmt"
-	"go.uber.org/zap"
 	"log"
-	"pangud.io/pangud/internal/data"
-	"pangud.io/pangud/internal/server"
-
-	//"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/conf"
-	log2 "pangud.io/pangud/internal/log"
+	"pangud.io/pangud/pkg/conf"
+	log2 "pangud.io/pangud/pkg/log"
+
+	"pangud.io/pangud/internal/apiserver/data"
+	"pangud.io/pangud/internal/apiserver/server"
 )
 
 func main() {
-	fmt.Println("Feiku panel")
+	fmt.Println("pangud server")
 	var bc = conf.Bootstrap{}
 	err := conf.Load("./configs/config.yaml", &bc)
 	if err != nil {

@@ -9,11 +9,11 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/api"
-	"pangud.io/pangud/internal/biz/user"
-	"pangud.io/pangud/internal/conf"
-	"pangud.io/pangud/internal/data"
-	"pangud.io/pangud/internal/server"
+	"pangud.io/pangud/internal/apiserver/biz"
+	"pangud.io/pangud/internal/apiserver/data"
+	"pangud.io/pangud/internal/apiserver/resource"
+	"pangud.io/pangud/internal/apiserver/server"
+	"pangud.io/pangud/pkg/conf"
 )
 
 // Injectors from wire.go:
@@ -24,8 +24,8 @@ func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App,
 		return nil, nil, err
 	}
 	userRepository := data.NewUserRepository(dataData, logger)
-	userUsecase := user.NewUserUsecase(userRepository, logger)
-	userResource := api.NewUserResource(logger, userUsecase)
+	userUsecase := biz.NewUserUsecase(userRepository, logger)
+	userResource := resource.NewUserResource(logger, userUsecase)
 	serverServer := server.NewServer(cfg, engine, userResource)
 	app := newApp(dataData, serverServer, cfg, logger)
 	return app, func() {
