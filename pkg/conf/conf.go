@@ -15,6 +15,7 @@ type Bootstrap struct {
 	Data    *Data
 	Logger  *Logger
 	Workdir string
+	Docker  *Docker
 }
 
 // Server is the server config
@@ -72,6 +73,10 @@ type GormLogger struct {
 	SlowThreshold             time.Duration `yaml:"slow_threshold"`
 	Caller                    bool          `yaml:"caller"`
 	IgnoreRecordNotFoundError bool          `yaml:"ignore_record_not_found_error"`
+}
+
+type Docker struct {
+	Host string
 }
 
 func (g *GormLogger) UnmarshalYAML(unmarshal func(interface{}) error) error {

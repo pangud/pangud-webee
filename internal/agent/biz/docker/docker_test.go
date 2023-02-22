@@ -1,0 +1,35 @@
+package docker
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"pangud.io/pangud/pkg/conf"
+	log2 "pangud.io/pangud/pkg/log"
+	"testing"
+)
+
+func TestMain(m *testing.M) {
+	setup()
+	code := m.Run()
+	if code != 0 {
+		os.Exit(code)
+	}
+}
+
+var imageUsecase *ImageUsecase
+
+func setup() {
+	fmt.Println("pangud server")
+	var bc = conf.Bootstrap{}
+	err := conf.Load("/Users/liwei/MyWorkspace/pangud/pangud/configs/config.yaml", &bc)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	//router.Use(cors.Default())
+
+	logger := log2.New(bc.Logger, "core.log")
+
+	cli := NewDockerClient(&bc, logger)
+	imageUsecase = NewImageUsecase(cli, logger)
+}
