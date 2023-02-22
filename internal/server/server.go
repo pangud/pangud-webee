@@ -6,7 +6,7 @@ import (
 
 	"pangud.io/pangud/pkg/conf"
 
-	"pangud.io/pangud/internal/apiserver/resource"
+	"pangud.io/pangud/internal/interface/restful"
 )
 
 var ProviderSet = wire.NewSet(NewServer)
@@ -14,10 +14,10 @@ var ProviderSet = wire.NewSet(NewServer)
 type Server struct {
 	cfg          *conf.Bootstrap
 	engine       *gin.Engine
-	userResource *resource.UserResource
+	userResource *restful.UserResource
 }
 
-func NewServer(cfg *conf.Bootstrap, engine *gin.Engine, userResource *resource.UserResource) *Server {
+func NewServer(cfg *conf.Bootstrap, engine *gin.Engine, userResource *restful.UserResource) *Server {
 	return &Server{
 		cfg:          cfg,
 		engine:       engine,

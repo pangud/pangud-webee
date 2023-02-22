@@ -5,7 +5,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/apiserver/biz"
+	"pangud.io/pangud/internal/biz"
 )
 
 type userRepository struct {

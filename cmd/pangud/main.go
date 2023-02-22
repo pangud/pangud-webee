@@ -7,11 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
+	"pangud.io/pangud/internal/data"
+	"pangud.io/pangud/internal/server"
 	"pangud.io/pangud/pkg/conf"
 	log2 "pangud.io/pangud/pkg/log"
-
-	"pangud.io/pangud/internal/apiserver/data"
-	"pangud.io/pangud/internal/apiserver/server"
 )
 
 func main() {
