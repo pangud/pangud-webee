@@ -1,4 +1,4 @@
-package resource
+package restful
 
 import (
 	"github.com/gin-gonic/gin"
