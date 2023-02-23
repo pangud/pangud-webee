@@ -9,9 +9,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/biz"
-	"pangud.io/pangud/internal/data"
-	"pangud.io/pangud/internal/interface/restful"
+	"pangud.io/pangud/internal/account/biz"
+	data2 "pangud.io/pangud/internal/account/data"
+	"pangud.io/pangud/internal/account/resource"
+	"pangud.io/pangud/internal/pkg/data"
 	"pangud.io/pangud/internal/server"
 	"pangud.io/pangud/pkg/conf"
 )
@@ -23,10 +24,11 @@ func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App,
 	if err != nil {
 		return nil, nil, err
 	}
-	userRepository := data.NewUserRepository(dataData, logger)
+	userRepository := data2.NewUserRepository(dataData, logger)
 	userUsecase := biz.NewUserUsecase(userRepository, logger)
-	userResource := restful.NewUserResource(logger, userUsecase)
-	serverServer := server.NewServer(cfg, engine, userResource)
+	userResource := resource.NewUserResource(logger, userUsecase)
+	accountAPI := resource.NewAccountAPI(engine, userResource)
+	serverServer := server.NewServer(cfg, engine, accountAPI)
 	app := newApp(dataData, serverServer, cfg, logger)
 	return app, func() {
 		cleanup()

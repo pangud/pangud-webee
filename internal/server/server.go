@@ -6,28 +6,27 @@ import (
 
 	"pangud.io/pangud/pkg/conf"
 
-	"pangud.io/pangud/internal/interface/restful"
+	account "pangud.io/pangud/internal/account/resource"
 )
 
 var ProviderSet = wire.NewSet(NewServer)
 
 type Server struct {
-	cfg          *conf.Bootstrap
-	engine       *gin.Engine
-	userResource *restful.UserResource
+	cfg        *conf.Bootstrap
+	engine     *gin.Engine
+	accountAPI *account.AccountAPI
 }
 
-func NewServer(cfg *conf.Bootstrap, engine *gin.Engine, userResource *restful.UserResource) *Server {
+func NewServer(cfg *conf.Bootstrap, engine *gin.Engine, accountAPI *account.AccountAPI) *Server {
 	return &Server{
-		cfg:          cfg,
-		engine:       engine,
-		userResource: userResource,
+		cfg:        cfg,
+		engine:     engine,
+		accountAPI: accountAPI,
 	}
 }
 
 func (s *Server) Run() {
 	//register routes
-	apiv1 := s.engine.Group("/api/v1")
-	apiv1.Group("users").GET("", s.userResource.List)
+	s.accountAPI.Register()
 	s.engine.Run(s.cfg.Server.Addr)
 }

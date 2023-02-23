@@ -5,15 +5,16 @@ import (
 
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/biz"
+	"pangud.io/pangud/internal/account/biz"
+	"pangud.io/pangud/internal/pkg/data"
 )
 
 type userRepository struct {
-	data *Data
+	data *data.Data
 	log  *zap.Logger
 }
 
-func NewUserRepository(data *Data, log *zap.Logger) biz.UserRepository {
+func NewUserRepository(data *data.Data, log *zap.Logger) biz.UserRepository {
 	return &userRepository{data: data, log: log}
 }
 

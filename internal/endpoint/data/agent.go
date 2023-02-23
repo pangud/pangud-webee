@@ -5,16 +5,18 @@ import (
 
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/biz"
+	"pangud.io/pangud/internal/endpoint/biz"
+
+	"pangud.io/pangud/internal/pkg/data"
 )
 
 type agentReadRepository struct {
-	data *Data
+	data *data.Data
 	log  *zap.Logger
 }
 
-// NewAgentReadRepository new a agent read repository
-func NewAgentReadRepository(data *Data,
+// NewAgentReadRepository new an agent read repository
+func NewAgentReadRepository(data *data.Data,
 	log *zap.Logger) biz.AgentReadRepository {
 	return &agentReadRepository{
 		data: data,

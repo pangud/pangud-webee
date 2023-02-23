@@ -9,9 +9,8 @@ import (
 	"github.com/google/wire"
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/biz"
-	"pangud.io/pangud/internal/data"
-	"pangud.io/pangud/internal/interface/restful"
+	"pangud.io/pangud/internal/account"
+	"pangud.io/pangud/internal/pkg/data"
 	"pangud.io/pangud/internal/server"
 	"pangud.io/pangud/pkg/conf"
 )
@@ -30,5 +29,5 @@ func (a *App) Run() {
 	a.server.Run()
 }
 func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App, func(), error) {
-	panic(wire.Build(data.ProviderSet, restful.ProviderSet, server.ProviderSet, biz.ProviderSet, newApp))
+	panic(wire.Build(data.ProviderSet, server.ProviderSet, account.ProviderSet, newApp))
 }

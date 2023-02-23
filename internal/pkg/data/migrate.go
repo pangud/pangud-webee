@@ -3,12 +3,12 @@ package data
 import (
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/biz"
+	accountBiz "pangud.io/pangud/internal/account/biz"
 )
 
 func (d *Data) Migrate() {
 	d.log.Info("migrate database")
-	err := d.db.AutoMigrate(&biz.User{})
+	err := d.db.AutoMigrate(&accountBiz.User{})
 	if err != nil {
 		d.log.Error("migrate database", zap.Error(err))
 	}

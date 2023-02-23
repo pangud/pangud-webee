@@ -14,7 +14,7 @@ import (
 	"pangud.io/pangud/pkg/tx"
 )
 
-var ProviderSet = wire.NewSet(NewData, NewTransaction, NewUserRepository)
+var ProviderSet = wire.NewSet(NewData, NewTransaction)
 
 type Data struct {
 	// 通过DB(ctx)获取 以支持事务
