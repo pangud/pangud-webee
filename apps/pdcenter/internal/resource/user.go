@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/account/biz"
+	"github.com/pangud-apps/pdcenter/internal/biz"
 )
 
 // @BasePath /api/v1

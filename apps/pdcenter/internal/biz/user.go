@@ -3,7 +3,7 @@ package biz
 import (
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/pkg/types"
+	"github.com/pangud/pangud/pkg/types"
 )
 
 type User struct {

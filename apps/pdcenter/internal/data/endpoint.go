@@ -5,9 +5,9 @@ import (
 
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/endpoint/biz"
+	"github.com/pangud-apps/pdcenter/internal/biz"
 
-	"pangud.io/pangud/internal/pkg/data"
+	"github.com/pangud/internal/pkg/data"
 )
 
 type agentReadRepository struct {
