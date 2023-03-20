@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"github.com/pangud/internal/endpoint/biz"
+	"github.com/pangud/pangud/internal/endpoint/biz"
 )
 
 // ReverseService ftp用户业务接口

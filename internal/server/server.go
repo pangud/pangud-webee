@@ -6,7 +6,7 @@ import (
 
 	"github.com/pangud/pangud/pkg/conf"
 
-	account "github.com/pangud/internal/account/resource"
+	account "github.com/pangud/pangud/internal/account/resource"
 )
 
 var ProviderSet = wire.NewSet(NewServer)

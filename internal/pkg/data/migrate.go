@@ -3,7 +3,7 @@ package data
 import (
 	"go.uber.org/zap"
 
-	accountBiz "github.com/pangud/internal/account/biz"
+	accountBiz "github.com/pangud/pangud/internal/account/biz"
 )
 
 func (d *Data) Migrate() {

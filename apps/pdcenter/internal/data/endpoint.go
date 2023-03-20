@@ -7,7 +7,7 @@ import (
 
 	"github.com/pangud-apps/pdcenter/internal/biz"
 
-	"github.com/pangud/internal/pkg/data"
+	"github.com/pangud/pangud/internal/pkg/data"
 )
 
 type agentReadRepository struct {
