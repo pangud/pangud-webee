@@ -5,7 +5,7 @@ import (
 	"github.com/google/wire"
 	"go.uber.org/zap"
 
-	"github.com/pangud/pkg/conf"
+	"github.com/pangud/pangud/pkg/conf"
 )
 
 var ProviderSet = wire.NewSet(NewDockerClient)

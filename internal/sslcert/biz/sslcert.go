@@ -2,7 +2,7 @@ package biz
 
 import (
 	"go.uber.org/zap"
-	"github.com/pangud/pkg/types"
+	"github.com/pangud/pangud/pkg/types"
 )
 
 // SSLCert 证书

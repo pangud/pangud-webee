@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 
-	"github.com/pangud/pkg/conf"
+	"github.com/pangud/pangud/pkg/conf"
 
 	account "github.com/pangud/internal/account/resource"
 )

@@ -4,8 +4,8 @@ import (
 	"context"
 	"go.uber.org/zap"
 	
-	"github.com/pangud/internal/pkg/data"
-	"github.com/pangud/internal/sslcert/biz"
+	"github.com/pangud/pangud/internal/pkg/data"
+	"github.com/pangud/pangud/internal/sslcert/biz"
 )
 
 type dnsProviderRepository struct {

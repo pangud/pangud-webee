@@ -9,9 +9,9 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/pangud/pkg/conf"
-	"github.com/pangud/pkg/log"
-	"github.com/pangud/pkg/tx"
+	"github.com/pangud/pangud/pkg/conf"
+	"github.com/pangud/pangud/pkg/log"
+	"github.com/pangud/pangud/pkg/tx"
 )
 
 var ProviderSet = wire.NewSet(NewData, NewTransaction)
