@@ -9,12 +9,12 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/account/biz"
-	data2 "pangud.io/pangud/internal/account/data"
-	"pangud.io/pangud/internal/account/resource"
-	"pangud.io/pangud/internal/pkg/data"
-	"pangud.io/pangud/internal/server"
-	"pangud.io/pangud/pkg/conf"
+	"github.com/pangud/internal/account/biz"
+	data2 "github.com/pangud/internal/account/data"
+	"github.com/pangud/internal/account/resource"
+	"github.com/pangud/internal/pkg/data"
+	"github.com/pangud/internal/server"
+	"github.com/pangud/pkg/conf"
 )
 
 // Injectors from wire.go:

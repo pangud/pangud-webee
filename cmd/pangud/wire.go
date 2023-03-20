@@ -9,10 +9,10 @@ import (
 	"github.com/google/wire"
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal"
-	"pangud.io/pangud/internal/pkg/data"
-	"pangud.io/pangud/internal/server"
-	"pangud.io/pangud/pkg/conf"
+	"github.com/pangud/internal"
+	"github.com/pangud/internal/pkg/data"
+	"github.com/pangud/internal/server"
+	"github.com/pangud/pkg/conf"
 )
 
 // App is the main application

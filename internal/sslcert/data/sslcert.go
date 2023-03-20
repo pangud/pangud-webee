@@ -3,8 +3,8 @@ package data
 import (
 	"context"
 	"go.uber.org/zap"
-	"pangud.io/pangud/internal/pkg/data"
-	"pangud.io/pangud/internal/sslcert/biz"
+	"github.com/pangud/internal/pkg/data"
+	"github.com/pangud/internal/sslcert/biz"
 )
 
 type sslcertRepository struct {

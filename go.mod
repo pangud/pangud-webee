@@ -1,4 +1,4 @@
-module pangud.io/pangud
+module github.com/pangud
 
 go 1.19
 

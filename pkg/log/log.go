@@ -10,8 +10,8 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 	glogger "gorm.io/gorm/logger"
 
-	"pangud.io/pangud/pkg/conf"
-	"pangud.io/pangud/third_party/zapgorm2"
+	"github.com/pangud/pkg/conf"
+	"github.com/pangud/third_party/zapgorm2"
 )
 
 type WriteSyncer struct {

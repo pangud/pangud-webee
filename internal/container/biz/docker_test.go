@@ -6,8 +6,8 @@ import (
 	"os"
 	"testing"
 
-	"pangud.io/pangud/pkg/conf"
-	log2 "pangud.io/pangud/pkg/log"
+	"github.com/pangud/pkg/conf"
+	log2 "github.com/pangud/pkg/log"
 )
 
 func TestMain(m *testing.M) {

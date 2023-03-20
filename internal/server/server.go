@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/google/wire"
 
-	"pangud.io/pangud/pkg/conf"
+	"github.com/pangud/pkg/conf"
 
-	account "pangud.io/pangud/internal/account/resource"
+	account "github.com/pangud/internal/account/resource"
 )
 
 var ProviderSet = wire.NewSet(NewServer)

@@ -7,15 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"pangud.io/pangud/internal/pkg/data"
-	"pangud.io/pangud/internal/server"
-	"pangud.io/pangud/pkg/conf"
-	log2 "pangud.io/pangud/pkg/log"
+	"github.com/pangud/internal/pkg/data"
+	"github.com/pangud/internal/server"
+	"github.com/pangud/pkg/conf"
+	log2 "github.com/pangud/pkg/log"
 )
 
-// @title           pangud API
+// @title           Pangud Center API
 // @version         1.0
-// @description     PANGUD API.
+// @description     PANGUD Center API.
 // @termsOfService  https://pangud.org
 
 // @contact.name   API Support
@@ -25,7 +25,7 @@ import (
 // @license.name  Apache 2.0
 // @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 
-// @host      localhost:3456
+// @host      localhost:6666
 // @BasePath  /api/v1
 
 // @securityDefinitions.basic  BasicAuth
@@ -33,7 +33,7 @@ import (
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	fmt.Println("pangud server")
+	fmt.Println("pdcenter")
 	var bc = conf.Bootstrap{}
 	err := conf.Load("./configs/config.yaml", &bc)
 	if err != nil {
