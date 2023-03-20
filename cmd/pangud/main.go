@@ -7,10 +7,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
-	"github.com/pangud/internal/pkg/data"
-	"github.com/pangud/internal/server"
-	"github.com/pangud/pkg/conf"
-	log2 "github.com/pangud/pkg/log"
+	"github.com/pangud/pangud/internal/pkg/data"
+	"github.com/pangud/pangud/internal/server"
+	"github.com/pangud/pangud/pkg/conf"
+	log2 "github.com/pangud/pangud/pkg/log"
 )
 
 // @title           Pangud Center API
