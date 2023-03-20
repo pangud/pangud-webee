@@ -11,22 +11,27 @@ const docTemplate = `{
         "title": "{{.Title}}",
         "termsOfService": "https://pangud.org",
         "contact": {
-            "name": "API Support",
+            "name": "服务支持",
             "url": "https://pangud.org",
             "email": "dev_support@gail.com"
         },
         "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "AGPL-3.0",
+            "url": "https://www.gnu.org/licenses/agpl-3.0.en.html"
         },
         "version": "{{.Version}}"
     },
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/users": {
+        "/ssl_certs/dns_providers": {
             "get": {
-                "description": "分页查询用户列表",
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "查询DNS提供商列表",
                 "consumes": [
                     "application/json"
                 ],
@@ -34,9 +39,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "用户"
+                    "SSL证书"
                 ],
-                "summary": "查询用户列表",
+                "summary": "查询DNS提供商列表",
                 "responses": {
                     "200": {
                         "description": "ok",
@@ -49,8 +54,10 @@ const docTemplate = `{
         }
     },
     "securityDefinitions": {
-        "BasicAuth": {
-            "type": "basic"
+        "ApiKeyAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`
@@ -58,11 +65,11 @@ const docTemplate = `{
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = &swag.Spec{
 	Version:          "1.0",
-	Host:             "localhost:3456",
+	Host:             "localhost:2345",
 	BasePath:         "/api/v1",
 	Schemes:          []string{},
-	Title:            "pangud API",
-	Description:      "PANGUD API.",
+	Title:            "PangudOS API",
+	Description:      "PANGUD OS API.",
 	InfoInstanceName: "swagger",
 	SwaggerTemplate:  docTemplate,
 }

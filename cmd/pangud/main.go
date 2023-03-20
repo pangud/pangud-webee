@@ -7,34 +7,37 @@ import (
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 
+	conf2 "github.com/pangud/pangud/internal/conf"
 	"github.com/pangud/pangud/internal/pkg/data"
 	"github.com/pangud/pangud/internal/server"
 	"github.com/pangud/pangud/pkg/conf"
 	log2 "github.com/pangud/pangud/pkg/log"
 )
 
-// @title           Pangud Center API
+// @title           PangudOS API
 // @version         1.0
-// @description     PANGUD Center API.
+// @description     PANGUD OS API.
 // @termsOfService  https://pangud.org
 
-// @contact.name   API Support
+// @contact.name   服务支持
 // @contact.url    https://pangud.org
 // @contact.email  dev_support@gail.com
 
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+// @license.name  AGPL-3.0
+// @license.url   https://www.gnu.org/licenses/agpl-3.0.en.html
 
-// @host      localhost:6666
+// @host      localhost:2345
 // @BasePath  /api/v1
 
-// @securityDefinitions.basic  BasicAuth
+// @securityDefinitions.apikey ApiKeyAuth
+// @in header
+// @name Authorization
 
 // @externalDocs.description  OpenAPI
 // @externalDocs.url          https://swagger.io/resources/open-api/
 func main() {
-	fmt.Println("pdcenter")
-	var bc = conf.Bootstrap{}
+	fmt.Println("pangud")
+	var bc = conf2.Bootstrap{}
 	err := conf.Load("./configs/config.yaml", &bc)
 	if err != nil {
 		log.Fatalln(err)
@@ -57,7 +60,7 @@ func main() {
 	app.Run()
 }
 
-func newApp(data *data.Data, server *server.Server, cfg *conf.Bootstrap, logger *zap.Logger) *App {
+func newApp(data *data.Data, server *server.Server, cfg *conf2.Bootstrap, logger *zap.Logger) *App {
 	fmt.Println("Pangu OS")
 	return &App{
 		data:   data,

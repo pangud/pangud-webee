@@ -1,23 +1,23 @@
 basePath: /api/v1
-host: localhost:3456
+host: localhost:2345
 info:
   contact:
     email: dev_support@gail.com
-    name: API Support
+    name: 服务支持
     url: https://pangud.org
-  description: PANGUD API.
+  description: PANGUD OS API.
   license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+    name: AGPL-3.0
+    url: https://www.gnu.org/licenses/agpl-3.0.en.html
   termsOfService: https://pangud.org
-  title: pangud API
+  title: PangudOS API
   version: "1.0"
 paths:
-  /users:
+  /ssl_certs/dns_providers:
     get:
       consumes:
       - application/json
-      description: 分页查询用户列表
+      description: 查询DNS提供商列表
       produces:
       - application/json
       responses:
@@ -25,10 +25,14 @@ paths:
           description: ok
           schema:
             type: string
-      summary: 查询用户列表
+      security:
+      - ApiKeyAuth: []
+      summary: 查询DNS提供商列表
       tags:
-      - 用户
+      - SSL证书
 securityDefinitions:
-  BasicAuth:
-    type: basic
+  ApiKeyAuth:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

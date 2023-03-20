@@ -10,13 +10,13 @@ import (
 )
 
 // Bootstrap is the bootstrap config
-type Bootstrap struct {
-	Server  *Server
-	Data    *Data
-	Logger  *Logger
-	Workdir string
-	Docker  *Docker
-}
+// type Bootstrap struct {
+// 	Server  *Server
+// 	Data    *Data
+// 	Logger  *Logger
+// 	Workdir string
+// 	Docker  *Docker
+// }
 
 // Server is the server config
 type Server struct {
@@ -120,4 +120,7 @@ func Load(file string, obj interface{}) error {
 		return err
 	}
 	return nil
+}
+func Test() {
+	fmt.Println("test")
 }

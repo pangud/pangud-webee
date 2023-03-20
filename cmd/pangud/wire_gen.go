@@ -8,13 +8,13 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"go.uber.org/zap"
-	"github.com/pangud/pangud/internal/account/biz"
-	data2 "github.com/pangud/pangud/internal/account/data"
-	"github.com/pangud/pangud/internal/account/resource"
+	"github.com/pangud/pangud/internal/conf"
 	"github.com/pangud/pangud/internal/pkg/data"
 	"github.com/pangud/pangud/internal/server"
-	"github.com/pangud/pangud/pkg/conf"
+	"github.com/pangud/pangud/internal/sslcert/biz"
+	data2 "github.com/pangud/pangud/internal/sslcert/data"
+	"github.com/pangud/pangud/internal/sslcert/resource"
+	"go.uber.org/zap"
 )
 
 // Injectors from wire.go:
@@ -24,11 +24,11 @@ func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App,
 	if err != nil {
 		return nil, nil, err
 	}
-	userRepository := data2.NewUserRepository(dataData, logger)
-	userUsecase := biz.NewUserUsecase(userRepository, logger)
-	userResource := resource.NewUserResource(logger, userUsecase)
-	accountAPI := resource.NewAccountAPI(engine, userResource)
-	serverServer := server.NewServer(cfg, engine, accountAPI)
+	dnsProviderRepository := data2.NewDNSProviderRepository(dataData, logger)
+	dnsProviderUsecase := biz.NewDNSProviderUsecase(dnsProviderRepository, logger)
+	dnsProviderResource := resource.NewDNSProviderResource(logger, dnsProviderUsecase)
+	sslCertAPI := resource.NewSSLCertPI(engine, dnsProviderResource)
+	serverServer := server.NewServer(cfg, engine, sslCertAPI)
 	app := newApp(dataData, serverServer, cfg, logger)
 	return app, func() {
 		cleanup()

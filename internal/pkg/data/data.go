@@ -9,7 +9,7 @@ import (
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 
-	"github.com/pangud/pangud/pkg/conf"
+	"github.com/pangud/pangud/internal/conf"
 	"github.com/pangud/pangud/pkg/log"
 	"github.com/pangud/pangud/pkg/tx"
 )

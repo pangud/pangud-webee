@@ -10,9 +10,9 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/pangud/pangud/internal"
+	"github.com/pangud/pangud/internal/conf"
 	"github.com/pangud/pangud/internal/pkg/data"
 	"github.com/pangud/pangud/internal/server"
-	"github.com/pangud/pangud/pkg/conf"
 )
 
 // App is the main application

@@ -4,3 +4,4 @@ test/
 logs/
 .DS_Store
 apps/
+go.work

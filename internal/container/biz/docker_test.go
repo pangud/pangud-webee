@@ -6,6 +6,7 @@ import (
 	"os"
 	"testing"
 
+	conf2 "github.com/pangud/pangud/internal/conf"
 	"github.com/pangud/pangud/pkg/conf"
 	log2 "github.com/pangud/pangud/pkg/log"
 )
@@ -22,7 +23,7 @@ var imageUsecase *ImageUsecase
 
 func setup() {
 	fmt.Println("pangud server")
-	var bc = conf.Bootstrap{}
+	var bc = conf2.Bootstrap{}
 	err := conf.Load("/Users/liwei/MyWorkspace/pangud/pangud/configs/config.yaml", &bc)
 	if err != nil {
 		log.Fatalln(err)
