@@ -15,7 +15,7 @@ type User struct {
 }
 
 func (u *User) TableName() string {
-	return "t_user"
+	return "users"
 }
 
 // UserRepository user repository

@@ -1,0 +1,34 @@
+basePath: /api/v1
+host: localhost:3456
+info:
+  contact:
+    email: dev_support@gail.com
+    name: API Support
+    url: https://pangud.org
+  description: PANGUD API.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://pangud.org
+  title: pangud API
+  version: "1.0"
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: 分页查询用户列表
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      summary: 查询用户列表
+      tags:
+      - 用户
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"
