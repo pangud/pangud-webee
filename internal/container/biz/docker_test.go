@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"path/filepath"
 	"testing"
 
 	conf2 "github.com/pangud/pangud/internal/conf"
@@ -24,7 +25,9 @@ var imageUsecase *ImageUsecase
 func setup() {
 	fmt.Println("pangud server")
 	var bc = conf2.Bootstrap{}
-	err := conf.Load("/Users/liwei/MyWorkspace/pangud/pangud/configs/config.yaml", &bc)
+	workDir := os.Getenv("WORKSPACE_DIR")
+	fmt.Println("workDir:", workDir)
+	err := conf.Load(filepath.Join(workDir, "configs/config.yaml"), &bc)
 	if err != nil {
 		log.Fatalln(err)
 	}

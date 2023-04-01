@@ -1,3 +1,6 @@
 {
-    "nuxt.isNuxtApp": false
+    "nuxt.isNuxtApp": false,
+    "go.testEnvVars": {
+        "WORKSPACE_DIR": "${workspaceFolder}"
+    }
 }

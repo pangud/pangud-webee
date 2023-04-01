@@ -56,7 +56,7 @@ func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 
 	dsn := filepath.Join(cfg.Workdir, "data/.pangud.sdb")
 
-	//use mysql
+	logger.Sugar().Debug("dsn: ", dsn)
 
 	db, err := gorm.Open(sqlite.Open(dsn), &gorm.Config{
 		Logger: log.NewGormLogger(cfg.Logger)})

@@ -2,7 +2,7 @@ server:
   addr: 0.0.0.0:2345
 workdir: ./test
 docker:
-  host: unix:///var/run/docker.sock
+  host: unix:///Users/liwei/.lima/docker/sock/docker.sock
 logger:
   file:
     path: ./logs

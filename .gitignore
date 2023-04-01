@@ -5,3 +5,4 @@ logs/
 .DS_Store
 apps/
 go.work
+__debug_bin

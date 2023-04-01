@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -38,7 +39,14 @@ import (
 func main() {
 	fmt.Println("pangud")
 	var bc = conf2.Bootstrap{}
-	err := conf.Load("./configs/config.yaml", &bc)
+	var configPath string
+
+	flag.StringVar(&configPath, "config", "./configs/config.yaml", "config file path")
+
+	flag.Parse()
+	fmt.Printf("configPath\n: %s", configPath)
+
+	err := conf.Load(configPath, &bc)
 	if err != nil {
 		log.Fatalln(err)
 	}
