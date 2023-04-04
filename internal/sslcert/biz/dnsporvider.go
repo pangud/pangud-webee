@@ -17,7 +17,7 @@ type DNSProvider struct {
 
 // TableName 表名
 func (p *DNSProvider) TableName() string {
-	return "t_core_ssl_dns_providers"
+	return "t_sslcert_dns_providers"
 }
 
 // DNSProviderRepository DNS服务商存储库

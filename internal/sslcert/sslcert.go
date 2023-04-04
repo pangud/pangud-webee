@@ -5,6 +5,7 @@ import (
 
 	"github.com/pangud/pangud/internal/sslcert/biz"
 	"github.com/pangud/pangud/internal/sslcert/data"
+	"github.com/pangud/pangud/internal/sslcert/resource"
 )
 
-var ProviderSet = wire.NewSet(biz.ProviderSet, data.ProviderSet)
+var ProviderSet = wire.NewSet(biz.ProviderSet, data.ProviderSet, resource.ProviderSet)
