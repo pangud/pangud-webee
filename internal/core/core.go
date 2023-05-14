@@ -17,4 +17,6 @@ var ProviderSet = wire.NewSet(biz.ProviderSet, data.ProviderSet, resource.Provid
 func Init(db *origindata.Data, log *zap.Logger) {
 	data.SetDefault(db.DB(context.Background()))
 	log.Info("core init success")
+	var do = "a"
+	log.Info(do)
 }

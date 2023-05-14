@@ -11,10 +11,14 @@ type Model interface {
 	TableName() string
 }
 
+type IDModel struct {
+	ID uint32 `json:"id" gorm:"autoIncrement;primaryKey;column:id;not null"`
+}
+
 // TimeModel is the base model for all models with time fields.
 type TimeModel struct {
-	CreateTime time.Time `gorm:"column:create_time;autoCreateTime"`
-	UpdateTime time.Time `gorm:"column:update_time;autoUpdateTime"`
+	CreateTime time.Time `json:"create_time" gorm:"column:create_time;autoCreateTime"`
+	UpdateTime time.Time `json:"update_time" gorm:"column:update_time;autoUpdateTime"`
 }
 
 // Repository 存储库接口 用于实体的获取、保存（新增+更新）、删除
@@ -29,12 +33,14 @@ type Repository[T Model] interface {
 
 // PageQuery 分页查询
 type PageQuery[T any] struct {
-	// PageNo 分页编号从1开始
-	PageNo int32 `json:"page_no"`
-	// PageSize 分页页码 最大100 默认10
-	PageSize int32 `json:"page_size"`
+	Limit  int `form:"limit" example:"10" default:"10"`
+	Offset int `form:"offset" example:"0" default:"0"`
 	// Condition 分页查询条件
 	Condition T
+}
+
+func (p *PageQuery[T]) SetDefault() {
+	p.Limit = 10
 }
 
 // Page 分页数据

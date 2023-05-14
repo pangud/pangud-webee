@@ -1,6 +1,8 @@
 package biz
 
-import "context"
+import (
+	"github.com/pangud/pangud/pkg/types"
+)
 
 type EndpointStatus uint8
 type EndpointType uint8
@@ -17,20 +19,22 @@ const (
 	EndpointTypeKube
 )
 
+// Endpoint endpoint model
 type Endpoint struct {
-	ID     uint32         `gorm:"column:id;primaryKey;autoIncrement;not null"`
-	Name   string         `gorm:"column:name;type:varchar(255);not null"`
-	Addr   string         `gorm:"column:addr;not null"`
-	Token  string         `gorm:"column:token;not null"`
+	types.IDModel
+	Name   string         `gorm:"column:name;type:string;size:100;not null"`
+	Addr   string         `gorm:"column:addr;not null;type:string;size:255"`
+	Token  string         `gorm:"column:token;not null;type:string;size:255"`
 	Type   EndpointType   `gorm:"column:type;not null"`
 	Status EndpointStatus `gorm:"column:status;not null"`
 }
 
+// TableName 表名
 func (a *Endpoint) TableName() string {
 	return "endpoints"
 }
 
-// EndpointReadRepository agent读存储库
+// EndpointReadRepository endpoint repository
 type EndpointReadRepository interface {
-	FindOne(ctx context.Context, id uint32) (*Endpoint, error)
+	types.Repository[*Endpoint]
 }

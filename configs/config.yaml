@@ -18,7 +18,7 @@ logger:
     format: text
     color: true
   gorm:
-    level: info
+    level: debug
     slow_threshold: 200ms
     caller: true
     ignore_record_not_found_error: false

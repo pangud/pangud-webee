@@ -25,4 +25,5 @@ func (api *CoreAPI) Register() {
 
 	apiv1.POST("users", api.userResource.newUser)
 	apiv1.GET("users", api.userResource.listUser)
+	apiv1.PATCH("users/:id", api.userResource.updateUser)
 }

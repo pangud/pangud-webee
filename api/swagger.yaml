@@ -1,25 +1,114 @@
 basePath: /api/v1
 definitions:
-  biz.ListUserReq:
+  biz.CreateUserCommand:
     properties:
-      keywords:
+      nickname:
+        example: Gaga
         type: string
-      limit:
-        type: integer
-      offset:
-        type: integer
+      password:
+        example: your password
+        type: string
+      realname:
+        example: 张三
+        type: string
+      username:
+        example: pduser
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  biz.UpdateUserCommand:
+    properties:
+      avatar:
+        example: https://xxxx.com/xb.jpg
+        type: string
+      locked:
+        example: false
+        type: boolean
+      nickname:
+        example: Gaga
+        type: string
+      realname:
+        example: 张三
+        type: string
     type: object
   biz.User:
     properties:
       avatar:
         type: string
+      create_time:
+        type: string
       id:
         type: integer
-      name:
+      last_login_time:
         type: string
+      locked:
+        type: boolean
       nickname:
         type: string
-      passwd:
+      password:
+        type: string
+      realname:
+        type: string
+      update_time:
+        type: string
+      username:
+        type: string
+    type: object
+  errors.Error:
+    properties:
+      code:
+        allOf:
+        - $ref: '#/definitions/errors.ErrorCode'
+        example: 0
+      msg:
+        example: success
+        type: string
+    type: object
+  errors.ErrorCode:
+    enum:
+    - 0
+    - 99999
+    - 100000
+    - 100010
+    - 100011
+    - 200000
+    - 200001
+    - 300000
+    type: integer
+    x-enum-comments:
+      ErrCodeInvalidParam: 参数错误
+    x-enum-varnames:
+    - ErrCodeOK
+    - ErrCodeUnknownError
+    - ErrCodeSystemError
+    - ErrCodeDBError
+    - ErrCodeDBConnectionError
+    - ErrCodeUserError
+    - ErrCodeInvalidParam
+    - ErrCodeExternalError
+  types.Page-biz_User:
+    properties:
+      limit:
+        type: integer
+      list:
+        items:
+          $ref: '#/definitions/biz.User'
+        type: array
+      offset:
+        type: integer
+      total:
+        description: Total 总数
+        type: integer
+    type: object
+  types.ResponseEntity-types_Page-biz_User:
+    properties:
+      code:
+        type: integer
+      data:
+        $ref: '#/definitions/types.Page-biz_User'
+      msg:
         type: string
     type: object
 host: localhost:2345
@@ -62,10 +151,14 @@ paths:
       - in: query
         name: keywords
         type: string
-      - in: query
+      - default: 10
+        example: 10
+        in: query
         name: limit
         type: integer
-      - in: query
+      - default: 0
+        example: 0
+        in: query
         name: offset
         type: integer
       produces:
@@ -74,7 +167,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/biz.ListUserReq'
+            $ref: '#/definitions/types.ResponseEntity-types_Page-biz_User'
       security:
       - ApiKeyAuth: []
       summary: 分页查询用户
@@ -83,24 +176,53 @@ paths:
     post:
       consumes:
       - application/json
-      description: 新增用户
+      description: 根据用户名、密码、昵称、姓名创建新用户, 其中用户名、密码为必填、其他为可选项
       parameters:
-      - description: user info
+      - description: 用户信息
         in: body
-        name: createUserReqData
+        name: CreateUserCommand
         required: true
         schema:
-          $ref: '#/definitions/biz.User'
+          $ref: '#/definitions/biz.CreateUserCommand'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: success
+          schema:
+            $ref: '#/definitions/errors.Error'
+      security:
+      - ApiKeyAuth: []
+      summary: 新增用户
+      tags:
+      - User
+  /users/{id}:
+    patch:
+      consumes:
+      - application/json
+      description: 更新用户信息 姓名、昵称、头像
+      parameters:
+      - description: use id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: 用户信息
+        in: body
+        name: UpdateUserCommand
+        required: true
+        schema:
+          $ref: '#/definitions/biz.UpdateUserCommand'
       produces:
       - application/json
       responses:
         "200":
-          description: ok
+          description: success
           schema:
-            type: string
+            $ref: '#/definitions/errors.Error'
       security:
       - ApiKeyAuth: []
-      summary: 新增用户
+      summary: 更新用户
       tags:
       - User
 securityDefinitions:

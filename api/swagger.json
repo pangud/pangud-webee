@@ -72,11 +72,15 @@
                     },
                     {
                         "type": "integer",
+                        "default": 10,
+                        "example": 10,
                         "name": "limit",
                         "in": "query"
                     },
                     {
                         "type": "integer",
+                        "default": 0,
+                        "example": 0,
                         "name": "offset",
                         "in": "query"
                     }
@@ -85,7 +89,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/biz.ListUserReq"
+                            "$ref": "#/definitions/types.ResponseEntity-types_Page-biz_User"
                         }
                     }
                 }
@@ -96,7 +100,7 @@
                         "ApiKeyAuth": []
                     }
                 ],
-                "description": "新增用户",
+                "description": "根据用户名、密码、昵称、姓名创建新用户, 其中用户名、密码为必填、其他为可选项",
                 "consumes": [
                     "application/json"
                 ],
@@ -109,20 +113,66 @@
                 "summary": "新增用户",
                 "parameters": [
                     {
-                        "description": "user info",
-                        "name": "createUserReqData",
+                        "description": "用户信息",
+                        "name": "CreateUserCommand",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/biz.User"
+                            "$ref": "#/definitions/biz.CreateUserCommand"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/errors.Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "patch": {
+                "security": [
+                    {
+                        "ApiKeyAuth": []
+                    }
+                ],
+                "description": "更新用户信息 姓名、昵称、头像",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "更新用户",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "use id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "用户信息",
+                        "name": "UpdateUserCommand",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/biz.UpdateUserCommand"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "ok",
+                        "description": "success",
                         "schema": {
-                            "type": "string"
+                            "$ref": "#/definitions/errors.Error"
                         }
                     }
                 }
@@ -130,17 +180,49 @@
         }
     },
     "definitions": {
-        "biz.ListUserReq": {
+        "biz.CreateUserCommand": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "nickname": {
+                    "type": "string",
+                    "example": "Gaga"
+                },
+                "password": {
+                    "type": "string",
+                    "example": "your password"
+                },
+                "realname": {
+                    "type": "string",
+                    "example": "张三"
+                },
+                "username": {
+                    "type": "string",
+                    "example": "pduser"
+                }
+            }
+        },
+        "biz.UpdateUserCommand": {
             "type": "object",
             "properties": {
-                "keywords": {
-                    "type": "string"
+                "avatar": {
+                    "type": "string",
+                    "example": "https://xxxx.com/xb.jpg"
                 },
-                "limit": {
-                    "type": "integer"
+                "locked": {
+                    "type": "boolean",
+                    "example": false
                 },
-                "offset": {
-                    "type": "integer"
+                "nickname": {
+                    "type": "string",
+                    "example": "Gaga"
+                },
+                "realname": {
+                    "type": "string",
+                    "example": "张三"
                 }
             }
         },
@@ -150,16 +232,109 @@
                 "avatar": {
                     "type": "string"
                 },
+                "create_time": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
-                "name": {
+                "last_login_time": {
                     "type": "string"
+                },
+                "locked": {
+                    "type": "boolean"
                 },
                 "nickname": {
                     "type": "string"
                 },
-                "passwd": {
+                "password": {
+                    "type": "string"
+                },
+                "realname": {
+                    "type": "string"
+                },
+                "update_time": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "errors.Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/errors.ErrorCode"
+                        }
+                    ],
+                    "example": 0
+                },
+                "msg": {
+                    "type": "string",
+                    "example": "success"
+                }
+            }
+        },
+        "errors.ErrorCode": {
+            "type": "integer",
+            "enum": [
+                0,
+                99999,
+                100000,
+                100010,
+                100011,
+                200000,
+                200001,
+                300000
+            ],
+            "x-enum-comments": {
+                "ErrCodeInvalidParam": "参数错误"
+            },
+            "x-enum-varnames": [
+                "ErrCodeOK",
+                "ErrCodeUnknownError",
+                "ErrCodeSystemError",
+                "ErrCodeDBError",
+                "ErrCodeDBConnectionError",
+                "ErrCodeUserError",
+                "ErrCodeInvalidParam",
+                "ErrCodeExternalError"
+            ]
+        },
+        "types.Page-biz_User": {
+            "type": "object",
+            "properties": {
+                "limit": {
+                    "type": "integer"
+                },
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/biz.User"
+                    }
+                },
+                "offset": {
+                    "type": "integer"
+                },
+                "total": {
+                    "description": "Total 总数",
+                    "type": "integer"
+                }
+            }
+        },
+        "types.ResponseEntity-types_Page-biz_User": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/types.Page-biz_User"
+                },
+                "msg": {
                     "type": "string"
                 }
             }

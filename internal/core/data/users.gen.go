@@ -27,11 +27,16 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 
 	tableName := _user.userDo.TableName()
 	_user.ALL = field.NewAsterisk(tableName)
-	_user.ID = field.NewUint32(tableName, "uid")
-	_user.Passwd = field.NewString(tableName, "password")
-	_user.Name = field.NewString(tableName, "name")
+	_user.ID = field.NewUint32(tableName, "id")
+	_user.Username = field.NewString(tableName, "username")
+	_user.Realname = field.NewString(tableName, "realname")
+	_user.Password = field.NewString(tableName, "password")
 	_user.Nickname = field.NewString(tableName, "nickname")
 	_user.Avatar = field.NewString(tableName, "avatar")
+	_user.Locked = field.NewBool(tableName, "locked")
+	_user.LastLoginTime = field.NewTime(tableName, "last_login_time")
+	_user.CreateTime = field.NewTime(tableName, "create_time")
+	_user.UpdateTime = field.NewTime(tableName, "update_time")
 
 	_user.fillFieldMap()
 
@@ -41,12 +46,17 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 type user struct {
 	userDo userDo
 
-	ALL      field.Asterisk
-	ID       field.Uint32
-	Passwd   field.String
-	Name     field.String
-	Nickname field.String
-	Avatar   field.String
+	ALL           field.Asterisk
+	ID            field.Uint32
+	Username      field.String
+	Realname      field.String
+	Password      field.String
+	Nickname      field.String
+	Avatar        field.String
+	Locked        field.Bool
+	LastLoginTime field.Time
+	CreateTime    field.Time
+	UpdateTime    field.Time
 
 	fieldMap map[string]field.Expr
 }
@@ -63,11 +73,16 @@ func (u user) As(alias string) *user {
 
 func (u *user) updateTableName(table string) *user {
 	u.ALL = field.NewAsterisk(table)
-	u.ID = field.NewUint32(table, "uid")
-	u.Passwd = field.NewString(table, "password")
-	u.Name = field.NewString(table, "name")
+	u.ID = field.NewUint32(table, "id")
+	u.Username = field.NewString(table, "username")
+	u.Realname = field.NewString(table, "realname")
+	u.Password = field.NewString(table, "password")
 	u.Nickname = field.NewString(table, "nickname")
 	u.Avatar = field.NewString(table, "avatar")
+	u.Locked = field.NewBool(table, "locked")
+	u.LastLoginTime = field.NewTime(table, "last_login_time")
+	u.CreateTime = field.NewTime(table, "create_time")
+	u.UpdateTime = field.NewTime(table, "update_time")
 
 	u.fillFieldMap()
 
@@ -90,12 +105,17 @@ func (u *user) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *user) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 5)
-	u.fieldMap["uid"] = u.ID
-	u.fieldMap["password"] = u.Passwd
-	u.fieldMap["name"] = u.Name
+	u.fieldMap = make(map[string]field.Expr, 10)
+	u.fieldMap["id"] = u.ID
+	u.fieldMap["username"] = u.Username
+	u.fieldMap["realname"] = u.Realname
+	u.fieldMap["password"] = u.Password
 	u.fieldMap["nickname"] = u.Nickname
 	u.fieldMap["avatar"] = u.Avatar
+	u.fieldMap["locked"] = u.Locked
+	u.fieldMap["last_login_time"] = u.LastLoginTime
+	u.fieldMap["create_time"] = u.CreateTime
+	u.fieldMap["update_time"] = u.UpdateTime
 }
 
 func (u user) clone(db *gorm.DB) user {

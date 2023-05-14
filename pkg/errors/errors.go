@@ -37,8 +37,8 @@ func OK() Error {
 }
 
 type Error struct {
-	Code    ErrorCode `json:"code"`
-	Message string    `json:"msg"`
+	Code    ErrorCode `json:"code" example:"0"`
+	Message string    `json:"msg" example:"success"`
 	cause   error
 }
 

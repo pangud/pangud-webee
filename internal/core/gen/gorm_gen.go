@@ -10,7 +10,7 @@ import (
 func main() {
 	fmt.Printf("Gen data object.\n")
 	g := gen.NewGenerator(gen.Config{
-		OutPath: "./internal/core/internal/data",
+		OutPath: "./internal/core/data",
 		Mode:    gen.WithDefaultQuery,
 	})
 

@@ -8,7 +8,7 @@ import (
 func (d *Data) Migrate() {
 	if d.config.Application.IsMaster {
 		//migrate user etc...
-		err := d.db.AutoMigrate(&biz.User{})
+		err := d.db.AutoMigrate(&biz.User{}, biz.Endpoint{})
 		if err != nil {
 			d.log.Fatal("migrate user", zap.Error(err))
 		}
