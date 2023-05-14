@@ -25,12 +25,14 @@ func NewUserQueryService(log *zap.Logger, data *data.Data) biz.UserQueryService 
 // ListUser list user by keywords with supporting pagination
 func (q *userQueryService) ListUser(ctx context.Context, query *biz.ListUserQuery) (*types.Page[*biz.User], error) {
 	user := q.query.User
-
-	queryStr := "%" + query.Keywords + "%"
-	result, count, err := user.userDo.
-		Where(user.Username.Like(queryStr)).
-		Or(user.Realname.Like(queryStr)).
-		Or(user.Nickname.Like(queryStr)).
+	do := user.userDo.WithContext(ctx)
+	if query.Keywords != "" {
+		queryStr := "%" + query.Keywords + "%"
+		do = do.Where(user.Username.Like(queryStr)).
+			Or(user.Realname.Like(queryStr)).
+			Or(user.Nickname.Like(queryStr))
+	}
+	result, count, err := do.
 		FindByPage(query.Offset, query.Limit)
 	if err != nil {
 		q.log.Error("find user error", zap.Error(err))
