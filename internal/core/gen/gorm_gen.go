@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/pangud/pangud/internal/core/internal/biz"
+	"github.com/pangud/pangud/internal/core/biz"
 	"gorm.io/gen"
 )
 

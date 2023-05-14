@@ -36,3 +36,22 @@ type PageQuery[T any] struct {
 	// Condition 分页查询条件
 	Condition T
 }
+
+// Page 分页数据
+type Page[T any] struct {
+	List []T `json:"list"`
+	// Total 总数
+	Total  int64 `json:"total"`
+	Offset int   `json:"offset"`
+	Limit  int   `json:"limit"`
+}
+
+// NewPage 新建分页数据
+func NewPage[T any](list []T, total int64, offset, limit int) *Page[T] {
+	return &Page[T]{
+		List:   list,
+		Total:  total,
+		Offset: offset,
+		Limit:  limit,
+	}
+}

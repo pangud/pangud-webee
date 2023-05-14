@@ -41,10 +41,11 @@ func main() {
 	var bc = conf2.Bootstrap{}
 	var configPath string
 
+	// read config file path from command line
 	flag.StringVar(&configPath, "config", "./configs/config.yaml", "config file path")
 
 	flag.Parse()
-	fmt.Printf("configPath\n: %s", configPath)
+	fmt.Printf("configPath: %s\n", configPath)
 
 	err := conf.Load(configPath, &bc)
 	if err != nil {
@@ -59,12 +60,7 @@ func main() {
 		panic(err)
 	}
 	defer cleanup()
-
-	// start and wait for stop signal
-	logger.Sugar().Info(zap.Any("app", app))
-
-	//migrate
-
+	//run app
 	app.Run()
 }
 

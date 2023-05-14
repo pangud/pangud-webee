@@ -8,29 +8,33 @@ import (
 type ErrorCode uint32
 
 const (
-	ErrCodeOK ErrorCode = iota
+	ErrCodeOK           ErrorCode = 0
+	ErrCodeUnknownError ErrorCode = 99999
 
-	/*	 以1开头为用户错误
-	11000-11099 用户通用错误*/
+	// 以1开头为系统端错误 1  00 标识 通用错误
+	ErrCodeSystemError ErrorCode = 100000
+	// 以1开头为系统端错误 1  00 标识 通用错误 数据库错误
+	ErrCodeDBError           ErrorCode = 100010
+	ErrCodeDBConnectionError ErrorCode = 100011
 
-	ErrCodeUserError    ErrorCode = 11000
-	ErrCodeInvalidParam ErrorCode = 11001
-	ErrCodeNotFound     ErrorCode = 11002
-	ErrCodeUnknownError ErrorCode = 11099
-
-	// 以2开头为系统端错误
-	//21000-21099 系统通用错误
-
-	ErrCodeSystemError ErrorCode = 20000
-	ErrcodeDBError     ErrorCode = 20001
+	ErrCodeUserError    ErrorCode = 200000
+	ErrCodeInvalidParam ErrorCode = 200001 //参数错误
+	// 以3开头为外部系统错误 3  00 标识通用错误
+	ErrCodeExternalError ErrorCode = 300000
 )
 
 var (
-	InternalServer = New(ErrCodeSystemError, "internal server error")
-	BadRequest     = New(ErrCodeInvalidParam, "invalid param")
-	NotFound       = New(ErrCodeNotFound, "not found")
-	OK             = New(ErrCodeOK, "success")
+	ok                = New(ErrCodeOK, "success")
+	SystemError       = New(ErrCodeSystemError, "system internal server error")
+	DBError           = New(ErrCodeDBError, "database error")
+	DBConnectionError = New(ErrCodeDBError, "database connection error")
+	UserError         = New(ErrCodeUserError, "user error")
+	ExternalError     = New(ErrCodeUserError, "external system error")
 )
+
+func OK() Error {
+	return *ok
+}
 
 type Error struct {
 	Code    ErrorCode `json:"code"`

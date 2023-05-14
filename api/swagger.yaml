@@ -1,4 +1,27 @@
 basePath: /api/v1
+definitions:
+  biz.ListUserReq:
+    properties:
+      keywords:
+        type: string
+      limit:
+        type: integer
+      offset:
+        type: integer
+    type: object
+  biz.User:
+    properties:
+      avatar:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      nickname:
+        type: string
+      passwd:
+        type: string
+    type: object
 host: localhost:2345
 info:
   contact:
@@ -30,6 +53,56 @@ paths:
       summary: 查询DNS提供商列表
       tags:
       - SSL证书
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: 分页查询用户
+      parameters:
+      - in: query
+        name: keywords
+        type: string
+      - in: query
+        name: limit
+        type: integer
+      - in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/biz.ListUserReq'
+      security:
+      - ApiKeyAuth: []
+      summary: 分页查询用户
+      tags:
+      - User
+    post:
+      consumes:
+      - application/json
+      description: 新增用户
+      parameters:
+      - description: user info
+        in: body
+        name: createUserReqData
+        required: true
+        schema:
+          $ref: '#/definitions/biz.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+      security:
+      - ApiKeyAuth: []
+      summary: 新增用户
+      tags:
+      - User
 securityDefinitions:
   ApiKeyAuth:
     in: header

@@ -17,6 +17,7 @@ import (
 var ProviderSet = wire.NewSet(NewData, NewTransaction)
 
 type Data struct {
+	config *conf.Bootstrap
 	// 通过DB(ctx)获取 以支持事务
 	db  *gorm.DB
 	log *zap.Logger
@@ -44,7 +45,7 @@ func (d *Data) DB(ctx context.Context) *gorm.DB {
 	if tx, ok := ctx.Value(contextTxKey{}).(*gorm.DB); ok {
 		return tx
 	}
-	return d.db
+	return d.db.WithContext(ctx)
 }
 
 //func (d *Data) Rdb() *redis.Client {
@@ -54,7 +55,7 @@ func (d *Data) DB(ctx context.Context) *gorm.DB {
 // NewData new a data and return.
 func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 
-	dsn := filepath.Join(cfg.Workdir, "data/.pangud.sdb")
+	dsn := filepath.Join(cfg.Application.Workdir, "data/.pangud.sdb")
 
 	logger.Sugar().Debug("dsn: ", dsn)
 
@@ -80,5 +81,5 @@ func NewData(cfg *conf.Bootstrap, logger *zap.Logger) (*Data, func(), error) {
 		//bdb.Close()
 	}
 
-	return &Data{db: db, log: logger}, cleanup, nil
+	return &Data{config: cfg, db: db, log: logger}, cleanup, nil
 }

@@ -9,6 +9,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/pangud/pangud/internal/conf"
+	"github.com/pangud/pangud/internal/core"
+	biz2 "github.com/pangud/pangud/internal/core/biz"
+	data3 "github.com/pangud/pangud/internal/core/data"
+	resource2 "github.com/pangud/pangud/internal/core/resource"
 	"github.com/pangud/pangud/internal/pkg/data"
 	"github.com/pangud/pangud/internal/server"
 	"github.com/pangud/pangud/internal/sslcert/biz"
@@ -28,7 +32,12 @@ func wireApp(cfg *conf.Bootstrap, engine *gin.Engine, logger *zap.Logger) (*App,
 	dnsProviderUsecase := biz.NewDNSProviderUsecase(dnsProviderRepository, logger)
 	dnsProviderResource := resource.NewDNSProviderResource(logger, dnsProviderUsecase)
 	sslCertAPI := resource.NewSSLCertPI(engine, dnsProviderResource)
-	serverServer := server.NewServer(cfg, engine, sslCertAPI)
+	userQueryService := data3.NewUserQueryService(logger, dataData)
+	userRepository := data3.NewUserRepository(dataData, logger)
+	userUsecase := biz2.NewUserUsecase(userQueryService, userRepository, logger)
+	userResource := resource2.NewUserResource(logger, dataData, userUsecase)
+	coreAPI := resource2.NewCoreAPI(engine, userResource)
+	serverServer := server.NewServer(cfg, engine, sslCertAPI, coreAPI)
 	app := newApp(dataData, serverServer, cfg, logger)
 	return app, func() {
 		cleanup()
@@ -47,6 +56,9 @@ type App struct {
 }
 
 func (a *App) Run() {
+
 	a.data.Migrate()
+	core.Init(a.data, a.logger)
+
 	a.server.Run()
 }

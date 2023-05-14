@@ -1,6 +1,8 @@
+app:
+  is_master: true
+  workdir: ./test
 server:
   addr: 0.0.0.0:2345
-workdir: ./test
 docker:
   host: unix:///var/run/docker.sock
 logger:

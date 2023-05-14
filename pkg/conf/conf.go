@@ -1,12 +1,11 @@
 package conf
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"time"
 
-	"github.com/spf13/viper"
+	"gopkg.in/yaml.v3"
 )
 
 // Bootstrap is the bootstrap config
@@ -17,6 +16,11 @@ import (
 // 	Workdir string
 // 	Docker  *Docker
 // }
+
+type Application struct {
+	IsMaster bool   `yaml:"is_master"`
+	Workdir  string `yaml:"workdir"`
+}
 
 // Server is the server config
 type Server struct {
@@ -111,12 +115,14 @@ func Load(file string, obj interface{}) error {
 		return err
 	}
 
-	viper.SetConfigType("yaml")
+	// viper.SetConfigType("yaml")
 
-	viper.ReadConfig(bytes.NewBuffer(content))
+	// viper.ReadConfig(bytes.NewBuffer(content))
+
+	err = yaml.Unmarshal(content, obj)
 
 	//var bootstrap Bootstrap
-	if err = viper.Unmarshal(obj); err != nil {
+	if err != nil {
 		return err
 	}
 	return nil
